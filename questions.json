@@ -1,13 +1,53 @@
-A = Slytherin, B = Gryffindor, C = Ravenclaw, D = Hufflepuff
-1.    How would you like to be known to history?
-  A: The great       B: The bold 
-  C: The wise        D: The good
-
-2.    Which of these would you most hate most people to call you?
-  A: Ordinary        B: Cowardly
-  C: Ignorant        D: Selfish
-
-3.    Is it a house you really don’t want to be in?
-  A: Slytherin        B: Gryffindor
-  C: Ravenclaw        D: Hufflepuff
-  E: I’m fine with all of them
+[
+    {
+        "question": "How would you like to be known to history?",
+        "answers": [
+            "The great",
+            "The bold",
+            "The wise",
+            "The good",
+            "N/A"
+        ],
+        "points": {
+            "slytherin": 10,
+            "gryffindor": 5,
+            "ravenclaw": 3,
+            "hufflepuff": 1,
+            "N/A": 0
+        }
+    },
+    {
+        "question": "Which of these would you most hate most people to call you?",
+        "answers": [
+            "Ordinary",
+            "Cowardly",
+            "Ignorant",
+            "Selfish",
+            "N/A"
+        ],
+        "points": {
+            "slytherin": 10,
+            "gryffindor": 5,
+            "ravenclaw": 3,
+            "hufflepuff": 1,
+            "N/A": 0
+        }
+    },
+    {
+        "question": "Is it a house you really don't want to be in?",
+        "answers": [
+            "Slytherin",
+            "Gryffindor",
+            "Ravenclaw",
+            "Hufflepuff",
+            "I'm fine with all of them"
+        ],
+        "points": {
+            "slytherin": 10,
+            "gryffindor": 5,
+            "ravenclaw": 3,
+            "hufflepuff": 1,
+            "N/A": 0
+        }
+    }
+]
