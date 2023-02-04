@@ -1,11 +1,44 @@
-const { SlashCommandBuilder } = require("discord.js");
+const {
+    SlashCommandBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+} = require('discord.js');
+
+const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("sorting-hat")
+        // Command name
+        .setName("sortinghat-buttons")
+
+        // Command description
         .setDescription("Choose your Hogwarts house"),
 
     async execute(interaction) {
-        await interaction.reply("Are you a true Slytherin or the bravest Gryffindor?");
+        const row = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId('Slytherin')
+                    .setLabel('Slytherin')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId('Gryffindor')
+                    .setLabel('Gryffindor')
+                    .setStyle(ButtonStyle.Secondary),
+                new ButtonBuilder()
+                    .setCustomId('Ravenclaw')
+                    .setLabel('Ravenclaw')
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
+                    .setCustomId('Huffelpuff')
+                    .setLabel('Huffelpuff')
+                    .setStyle(ButtonStyle.Primary),
+            );
+
+        await interaction.reply({
+            content: 'Pick your house!',
+            components: [row],
+        });
     }
-}
+};
