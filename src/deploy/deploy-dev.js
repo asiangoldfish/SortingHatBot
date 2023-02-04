@@ -14,7 +14,7 @@ const commandFiles = fs .readdirSync('./src/commands')
 
 // Fetch the SlashCommandBUilder#toJSON() output of each command's data
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
+    const command = require(`./../commands/${file}`);
     commands.push(command.data.toJSON());
 }
 // Construct and prepare an instance of the REST module
