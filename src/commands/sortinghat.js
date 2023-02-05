@@ -25,15 +25,15 @@ module.exports = {
                 new ButtonBuilder()
                     .setCustomId('Gryffindor')
                     .setLabel('Gryffindor')
-                    .setStyle(ButtonStyle.Secondary),
+                    .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId('Ravenclaw')
                     .setLabel('Ravenclaw')
-                    .setStyle(ButtonStyle.Danger),
+                    .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId('Huffelpuff')
                     .setLabel('Huffelpuff')
-                    .setStyle(ButtonStyle.Primary),
+                    .setStyle(ButtonStyle.Secondary),
             );
 
         await interaction.reply({
