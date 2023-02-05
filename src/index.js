@@ -17,8 +17,9 @@ dotenv.config();
 // Create a new discord bot client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-// Create a new collection for slash commands
-client.commands = new Collection();
+// Create collections
+client.commands = new Collection();     // Slash commands
+client.buttons = new Collection();      // Button interactions
 
 // Dynamically retrieve commands from "src/commands"
 const commandsPath = path.join(__dirname, 'commands');
@@ -35,6 +36,24 @@ for (const file of commandFiles) {
         client.commands.set(command.data.name, command);
     } else {
         console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property`);
+    }
+}
+
+// Dynamically retrieve button-interactions
+const buttonsPath = path.join(__dirname, 'button-interactions');
+const buttonFiles = fs  .readdirSync(buttonsPath)
+                        .filter(file => file.endsWith('js'));
+
+for (const file of buttonFiles) {
+    const filePath = path.join(buttonsPath, file);
+    const button = require(filePath);
+
+    // Set a new item in the Collection with the key as the command name and the
+    // value as the exported module
+    if ('execute' in button) {
+        client.buttons.set(button.commandName, button);
+    } else {
+        console.log(`[WARNING] The button-interaction at ${filePath} is missing a required "data" or "execute" property`);
     }
 }
 
