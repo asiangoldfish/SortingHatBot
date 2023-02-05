@@ -1,48 +1,27 @@
-// Require slash commands
+/* 
+ * Native NodeJS modules for file management. We use these for the following:
+ *  - Fetching commands from "src/commands" directory
+*/
 const fs = require("node:fs");
 const path = require("node:path");
 
-// Require the necessary discord.js classes
+// Necessary discord.js classes
 const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
 
-// Require dotenv for secret token
+// Library to work with secrets. The secret is stored in ".env" file
 const dotenv = require('dotenv');
 
 // Load environment variables from .env file
 dotenv.config();
 
-// Create a new client instance
+// Create a new discord bot client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-// Load commands
-client.commands = new Collection();
+// Create collections
+client.commands = new Collection();     // Slash commands
+client.buttons = new Collection();      // Button interactions
 
-// Command listener
-client.on(Events.InteractionCreate, async interaction => {
-    // We make sure that only slash commands are listened to
-    if (!interaction.isChatInputCommand()) return;
-    
-    const command = interaction.client.commands.get(interaction.commandName);
-
-	if (!command) {
-		console.error(`No command matching ${interaction.commandName} was found.`);
-		return;
-	}
-
-    // Attempt to execute the invoked command
-    try {
-        await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({
-            content: 'There was an error while executing this command!',
-            ephemeral: true
-        });
-	}
-
-});
-
-// Dynamically retrieve command files
+// Dynamically retrieve commands from "src/commands"
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs .readdirSync(commandsPath)
                         .filter(file => file.endsWith('.js'));
@@ -60,12 +39,37 @@ for (const file of commandFiles) {
     }
 }
 
-// When the client is ready, run this code (only once)
-client.once(Events.ClientReady, c => {
-    console.log(`Ready! Logged in as ${c.user.tag}`);
-})
+// Dynamically retrieve button-interactions
+const buttonsPath = path.join(__dirname, 'button-interactions');
+const buttonFiles = fs  .readdirSync(buttonsPath)
+                        .filter(file => file.endsWith('js'));
 
+for (const file of buttonFiles) {
+    const filePath = path.join(buttonsPath, file);
+    const button = require(filePath);
 
+    // Set a new item in the Collection with the key as the command name and the
+    // value as the exported module
+    if ('execute' in button) {
+        client.buttons.set(button.commandName, button);
+    } else {
+        console.log(`[WARNING] The button-interaction at ${filePath} is missing a required "data" or "execute" property`);
+    }
+}
+
+// Dynamically retrieve events from "src/events"
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+    const filePath = path.join(eventsPath, file);
+    const event = require(filePath);
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args));
+    } else {
+        client.on(event.name, (...args) => event.execute(...args));
+    }
+}
 
 // Login to Discord with client's token
 client.login(process.env.DISCORD_TOKEN);

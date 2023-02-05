@@ -31,7 +31,7 @@ It's recommended to [learn Javascript](https://developer.mozilla.org/en-US/docs/
 - You are now ready to test the bot. Execute the following commands on the console:
     ```
     npm install                 # Installs all required dependencies
-    npm run deploy-commmands    # Deploys all slash commands to the test server
+    npm run deploy-dev    # Deploys all slash commands to the test server
     npm run start               # Starts the bot
     ```
 
@@ -40,5 +40,10 @@ It's recommended to [learn Javascript](https://developer.mozilla.org/en-US/docs/
     /ping
     ```
     The bot should respond with "Pong!"
+
+- To deploy commands to all servers, do the following:
+    ```
+    npm run deploy-global
+    ```
 
 Happy coding!
