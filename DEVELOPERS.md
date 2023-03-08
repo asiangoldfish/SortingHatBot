@@ -7,8 +7,7 @@
 # Prerequisites
 Sorting Hat Bot is a NodeJS project. This means that the following must be installed in your development environment (click on them for installation instructions):
 
-- [NodeJS](https://nodejs.dev/en/learn/how-to-install-nodejs/)
-- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [NodeJS](https://nodejs.org/en/download/)
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
 It's recommended to [learn Javascript](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics) before working on the project. A basicunderstanding of the language will greatly help.
